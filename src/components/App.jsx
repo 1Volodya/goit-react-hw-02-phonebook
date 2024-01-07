@@ -26,8 +26,13 @@ export class App extends Component {
   };
 
   handleAppProfile = formData => {
-    if (this.state.contacts.some(profile => profile.name === formData.name)) {
-      alert(`Profile with this ${formData.name} alredy axists!`);
+    const lowerCaseName = formData.name.toLowerCase();
+    if (
+      this.state.contacts.some(
+        profile => profile.name.toLowerCase() === lowerCaseName
+      )
+    ) {
+      alert(`Profile with this ${formData.name} already exists!`);
       return;
     }
 
