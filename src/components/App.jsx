@@ -17,9 +17,6 @@ export class App extends Component {
     filter: '',
   };
 
-  // handleChange = e => {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // };
   handleChangeFilter = event => {
     const value = event.target.value;
     this.setState({ filter: value });
@@ -51,6 +48,18 @@ export class App extends Component {
       contacts: this.state.contacts.filter(contact => contact.id !== contactId),
     });
   };
+  componentDidMount() {
+    const stringifedContacts = localStorage.getItem('contacts');
+    const contacts = JSON.parse(stringifedContacts) ?? [];
+    this.setState({ contacts });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      const stringifedContacts = JSON.stringify(this.state.contacts);
+      localStorage.setItem('contacts', stringifedContacts);
+    }
+  }
 
   render() {
     const filteredProfiles = this.state.contacts.filter(profile =>
